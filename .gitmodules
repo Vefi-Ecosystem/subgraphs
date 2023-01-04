@@ -1,3 +1,3 @@
 [submodule "exchange"]
 	path = exchange
-	url = git@github.com:Vefi-Ecosystem/subgraphs.git
+	url = git@github.com:Vefi-Ecosystem
