@@ -1,0 +1,41 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PublicTokenSaleCreator
+    network: mainnet
+    source:
+      address: "0xACf4370fFbe0542525FA5b46515A486833993342"
+      abi: PublicTokenSaleCreator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - Paused
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - TokenSaleItemCreated
+        - Unpaused
+      abis:
+        - name: PublicTokenSaleCreator
+          file: ./abis/PublicTokenSaleCreator.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: TokenSaleItemCreated(address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
+          handler: handleTokenSaleItemCreated
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/public-token-sale-creator.ts
