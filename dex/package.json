@@ -4,8 +4,8 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --network mainnet --ipfs https://graph.vefinetwork.org/app/ipfs/ --node https://graph.vefinetwork.org/app/smartchain/admin/ vefi/exchange",
-    "create-remote": "graph create --network mainnet --node https://graph.vefinetwork.org/app/smartchain/admin/ vefi/exchange",
+    "deploy": "graph deploy --network mainnet --ipfs https://graph.vefinetwork.org/app/ipfs/ --node https://graph.vefinetwork.org/app/wanchain/admin/ vefi/exchange",
+    "create-remote": "graph create --network mainnet --node https://graph.vefinetwork.org/app/wanchain/admin/ vefi/exchange",
     "create-local": "graph create --node http://localhost:8020/ Factory",
     "remove-local": "graph remove --node http://localhost:8020/ Factory",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 Factory",

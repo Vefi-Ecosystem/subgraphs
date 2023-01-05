@@ -1,8 +1,8 @@
 {
   "mainnet": {
     "QuasarFactory": {
-      "address": "0x6A6CFF59de25175A5BC9e4796C88a73b2c581b49",
-      "startBlock": 24534697
+      "address": "0x64FAF984Bf60dE19e24238521814cA98574E3b00",
+      "startBlock": 24550781
     }
   }
 }
