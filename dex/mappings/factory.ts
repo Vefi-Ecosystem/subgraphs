@@ -14,6 +14,7 @@ export function handlePairCreated(event: PairCreatedEvent): void {
     factory.totalLiquidityETH = ZERO_BD;
     factory.totalLiquidityETH = ZERO_BD;
     factory.totalVolumeUSD = ZERO_BD;
+    factory.totalVolumeETH = ZERO_BD;
     factory.untrackedVolumeUSD = ZERO_BD;
     factory.totalLiquidityUSD = ZERO_BD;
     factory.txCount = ZERO_BI;
