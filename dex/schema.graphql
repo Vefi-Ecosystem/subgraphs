@@ -41,7 +41,7 @@ type Token @entity {
    id: ID!
   symbol: String!
   name: String!
-  decimals: Int!
+  decimals: BigInt!
   totalSupply: BigInt!
   tradeVolume: BigDecimal!
   tradeVolumeUSD: BigDecimal!
@@ -49,6 +49,7 @@ type Token @entity {
   txCount: BigInt!
   totalLiquidity: BigDecimal!
   derivedETH: BigDecimal
+  derivedUSD: BigDecimal
   tokenDayData: [TokenDayData!]! @derivedFrom(field: "token")
   pairDayDataBase: [PairDayData!]! @derivedFrom(field: "token0")
   pairDayDataQuote: [PairDayData!]! @derivedFrom(field: "token1")
@@ -87,7 +88,7 @@ type LiquidityPositionSnapshot @entity {
 
 type Transaction @entity {
   id: ID! # txn hash
-  blockNumber: BigInt!
+  block: BigInt!
   timestamp: BigInt!
   mints: [Mint!]!
   burns: [Burn!]!

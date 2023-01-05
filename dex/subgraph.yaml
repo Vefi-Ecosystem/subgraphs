@@ -5,10 +5,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: QuasarFactory
-    network: mainnet
+    network: bitgert
     source:
       address: "0x46e65AfC0BBF7cc037D82AC2eA9aaf560dD962Cc"
       abi: QuasarFactory
+      startBlock: 1462207
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -26,3 +27,33 @@ dataSources:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handlePairCreated
       file: ./mappings/factory.ts
+templates:
+  - kind: ethereum
+    name: Pair
+    network: bitgert
+    source:
+      abi: Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./mappings/core.ts
+      entities:
+        - Pair
+        - Token
+      abis:
+        - name: QuasarFactory
+          file: ./abis/QuasarFactory.json
+        - name: Pair
+          file: ./abis/Pair.json
+      eventHandlers:
+        - event: Mint(indexed address,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed address,uint256,uint256,indexed address)
+          handler: handleBurn
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Sync(uint112,uint112)
+          handler: handleSync

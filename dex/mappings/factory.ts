@@ -1,11 +1,9 @@
-import { BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
+import { log } from "@graphprotocol/graph-ts";
 import { PairCreated as PairCreatedEvent } from "../generated/QuasarFactory/QuasarFactory";
 import { QuasarFactory, Pair, Bundle, Token } from "../generated/schema";
+import { Pair as PairTemplate } from "../generated/templates";
 import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol } from "./utils/erc20";
-
-const FACTORY_ADDRESS = "0x46e65AfC0BBF7cc037D82AC2eA9aaf560dD962Cc";
-const ZERO_BI = BigInt.zero();
-const ZERO_BD = BigDecimal.zero();
+import { FACTORY_ADDRESS, ZERO_BD, ZERO_BI } from "./constants";
 
 export function handlePairCreated(event: PairCreatedEvent): void {
   let factory = QuasarFactory.load(FACTORY_ADDRESS);
@@ -97,4 +95,6 @@ export function handlePairCreated(event: PairCreatedEvent): void {
   token1.save();
   pair.save();
   factory.save();
+
+  PairTemplate.create(event.params.pair);
 }

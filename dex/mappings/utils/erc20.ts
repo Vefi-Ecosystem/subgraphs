@@ -15,11 +15,11 @@ export const fetchTokenSymbol = (id: Address): string => {
   return !call.reverted ? call.value : "unknown";
 };
 
-export const fetchTokenDecimals = (id: Address): number | null => {
+export const fetchTokenDecimals = (id: Address): BigInt | null => {
   const contract = ERC20.bind(id);
   const call = contract.try_decimals();
 
-  return !call.reverted ? call.value : null;
+  return !call.reverted ? BigInt.fromI32(call.value) : null;
 };
 
 export const fetchTokenTotalSupply = (id: Address): BigInt | null => {
