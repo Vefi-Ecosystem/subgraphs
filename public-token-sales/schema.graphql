@@ -1,0 +1,18 @@
+type TokenSaleItemCreated @entity(immutable: true) {
+  id: Bytes!
+  presaleAddress: Bytes! # address
+  token: Bytes! # address
+  tokensForSale: BigInt! # uint256
+  softcap: BigInt! # uint256
+  hardcap: BigInt! # uint256
+  tokensPerEther: BigInt! # uint256
+  minContributionEther: BigInt! # uint256
+  maxContributionEther: BigInt! # uint256
+  saleStartTime: BigInt! # uint256
+  saleEndTime: BigInt! # uint256
+  proceedsTo: Bytes! # address
+  admin: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
