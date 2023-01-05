@@ -1,4 +1,4 @@
-type TokenSaleItemCreated @entity(immutable: true) {
+type TokenSaleItem @entity(immutable: true) {
   id: Bytes!
   presaleAddress: Bytes! # address
   token: Bytes! # address
