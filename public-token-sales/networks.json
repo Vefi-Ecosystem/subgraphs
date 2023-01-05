@@ -1,7 +1,8 @@
 {
   "mainnet": {
     "PublicTokenSaleCreator": {
-      "address": "0xACf4370fFbe0542525FA5b46515A486833993342"
+      "address": "0xACf4370fFbe0542525FA5b46515A486833993342",
+      "startBlock": 37595931
     }
   }
 }

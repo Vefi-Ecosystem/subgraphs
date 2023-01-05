@@ -1,18 +1,18 @@
 type TokenSaleItem @entity(immutable: true) {
-  id: Bytes!
-  presaleAddress: Bytes! # address
-  token: Bytes! # address
-  tokensForSale: BigInt! # uint256
-  softcap: BigInt! # uint256
-  hardcap: BigInt! # uint256
-  tokensPerEther: BigInt! # uint256
-  minContributionEther: BigInt! # uint256
-  maxContributionEther: BigInt! # uint256
-  saleStartTime: BigInt! # uint256
-  saleEndTime: BigInt! # uint256
-  proceedsTo: Bytes! # address
-  admin: Bytes! # address
+  id: ID!
+  presaleAddress: String!
+  token: String!
+  tokensForSale: BigInt!
+  softcap: BigInt!
+  hardcap: BigInt!
+  tokensPerEther: BigInt!
+  minContributionEther: BigInt!
+  maxContributionEther: BigInt!
+  saleStartTime: BigInt!
+  saleEndTime: BigInt!
+  proceedsTo: String!
+  admin: String! # address
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  transactionHash: String!
 }
