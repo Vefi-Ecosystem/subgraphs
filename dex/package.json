@@ -4,7 +4,8 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy:bitgert": "graph deploy --network bitgert --node https://graph.vefinetwork.org/app/bitgert/admin/ vefi/exchange",
+    "deploy": "graph deploy --network mainnet --ipfs https://graph.vefinetwork.org/app/ipfs/ --node https://graph.vefinetwork.org/app/bitgert/admin/ vefi/exchange",
+    "create:bitgert": "graph create --network mainnet --node https://graph.vefinetwork.org/app/bitgert/admin/ vefi/exchange",
     "create-local": "graph create --node http://localhost:8020/ Factory",
     "remove-local": "graph remove --node http://localhost:8020/ Factory",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 Factory",
