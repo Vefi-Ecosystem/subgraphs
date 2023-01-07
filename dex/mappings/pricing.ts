@@ -16,9 +16,9 @@ export const getETHPriceInUSD = (): BigDecimal => {
     }
     return ZERO_BD;
   } else if (!!usdtPair) {
-    return usdtPair.token1Price;
+    return usdtPair.token0Price;
   } else if (!!usdcPair) {
-    return usdcPair.token1Price;
+    return usdcPair.token0Price;
   }
   return ZERO_BD;
 };
