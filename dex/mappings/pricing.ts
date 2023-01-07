@@ -4,29 +4,31 @@ import { ADDRESS_ZERO, ONE_BD, WETH, WETH_USDC_PAIR, WETH_USDT_PAIR, ZERO_BD } f
 import { factoryContract } from "./utils";
 
 export const getETHPriceInUSD = (): BigDecimal => {
-  const usdtPair = Pair.load(WETH_USDT_PAIR); // usdt is token0;
-  const usdcPair = Pair.load(WETH_USDC_PAIR); // usdc is token0;
+  const usdtPair = Pair.load(WETH_USDT_PAIR); // usdt is token1;
+  const usdcPair = Pair.load(WETH_USDC_PAIR); // usdc is token1;
 
   if (!!usdtPair && !!usdcPair) {
-    const totalLiquidityETH = usdtPair.reserve1.plus(usdcPair.reserve1);
+    const totalLiquidityETH = usdtPair.reserve0.plus(usdcPair.reserve0);
     if (totalLiquidityETH.notEqual(ZERO_BD)) {
-      const usdtWeight = usdtPair.reserve1.div(totalLiquidityETH);
-      const usdcWeight = usdtPair.reserve1.div(totalLiquidityETH);
-      return usdtPair.token0Price.times(usdtWeight).plus(usdcPair.token0Price.times(usdcWeight));
+      const usdtWeight = usdtPair.reserve0.div(totalLiquidityETH);
+      const usdcWeight = usdtPair.reserve0.div(totalLiquidityETH);
+      return usdtPair.token1Price.times(usdtWeight).plus(usdcPair.token1Price.times(usdcWeight));
     }
     return ZERO_BD;
   } else if (!!usdtPair) {
-    return usdtPair.token0Price;
+    return usdtPair.token1Price;
   } else if (!!usdcPair) {
-    return usdcPair.token0Price;
+    return usdcPair.token1Price;
   }
   return ZERO_BD;
 };
 
 const WHITELIST: Array<string> = [
   WETH,
-  "0x6a2d262d56735dba19dd70682b39f6be9a931d98", // USDC
-  "0x3795c36e7d12a8c252a20c5a7b455f7c57b60283", // USDT
+  "0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b", // USDC
+  "0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73", // USDT
+  "0xf390830df829cf22c53c8840554b98eafc5dcbc2", // WBTC
+  "0xfa9343c3897324496a05fc75abed6bac29f8a40f" // ETH
 ];
 
 const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("10");
