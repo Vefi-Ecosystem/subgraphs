@@ -2,7 +2,7 @@ import { log } from "@graphprotocol/graph-ts";
 import { PairCreated as PairCreatedEvent } from "../generated/QuasarFactory/QuasarFactory";
 import { QuasarFactory, Pair, Bundle, Token } from "../generated/schema";
 import { Pair as PairTemplate } from "../generated/templates";
-import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol } from "./utils/erc20";
+import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol, fetchTokenTotalSupply } from "./utils/erc20";
 import { FACTORY_ADDRESS, ZERO_BD, ZERO_BI } from "./constants";
 
 export function handlePairCreated(event: PairCreatedEvent): void {
@@ -42,13 +42,22 @@ export function handlePairCreated(event: PairCreatedEvent): void {
       return;
     }
 
+    let totalSupply = fetchTokenTotalSupply(event.params.token0);
+    if (totalSupply === null) {
+      log.debug("could not obtain total supply for token 0", []);
+      return;
+    }
+
     token0.decimals = decimals;
     token0.derivedETH = ZERO_BD;
+    token0.derivedUSD = ZERO_BD;
     token0.tradeVolume = ZERO_BD;
     token0.tradeVolumeUSD = ZERO_BD;
     token0.untrackedVolumeUSD = ZERO_BD;
     token0.totalLiquidity = ZERO_BD;
     token0.txCount = ZERO_BI;
+    token0.totalSupply = totalSupply;
+    token0.save();
   }
 
   if (!token1 || token1 == null) {
@@ -63,19 +72,27 @@ export function handlePairCreated(event: PairCreatedEvent): void {
       return;
     }
 
+    let totalSupply = fetchTokenTotalSupply(event.params.token0);
+    if (totalSupply === null) {
+      log.debug("could not obtain total supply for token 0", []);
+      return;
+    }
+
     token1.decimals = decimals;
     token1.derivedETH = ZERO_BD;
+    token1.derivedUSD = ZERO_BD;
     token1.tradeVolume = ZERO_BD;
     token1.tradeVolumeUSD = ZERO_BD;
     token1.untrackedVolumeUSD = ZERO_BD;
     token1.totalLiquidity = ZERO_BD;
     token1.txCount = ZERO_BI;
+    token1.totalSupply = totalSupply;
+    token1.save();
   }
 
   const pair = new Pair(event.params.pair.toHex());
   pair.token0 = token0.id;
   pair.token1 = token1.id;
-  pair.liquidityProviderCount = ZERO_BI;
   pair.createdAtTimestamp = event.block.timestamp;
   pair.createdAtBlockNumber = event.block.number;
   pair.txCount = ZERO_BI;
@@ -92,10 +109,7 @@ export function handlePairCreated(event: PairCreatedEvent): void {
   pair.token0Price = ZERO_BD;
   pair.token1Price = ZERO_BD;
 
-  token0.save();
-  token1.save();
   pair.save();
-  factory.save();
 
   PairTemplate.create(event.params.pair);
 }

@@ -142,7 +142,6 @@ export function handleSync(event: Sync): void {
   const bundle = Bundle.load("1") as Bundle;
   bundle.ethPrice = getETHPriceInUSD();
   bundle.save();
-
   const t0DerivedETH = findETHPerToken(token0);
   token0.derivedETH = t0DerivedETH;
   token0.derivedUSD = t0DerivedETH.times(bundle.ethPrice);

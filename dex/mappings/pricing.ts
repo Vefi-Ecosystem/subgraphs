@@ -37,22 +37,30 @@ export const findETHPerToken = (token: Token): BigDecimal => {
   for (let i = 0; i < WHITELIST.length; i++) {
     const pairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]));
     if (pairAddress.toHex() !== ADDRESS_ZERO) {
-      const pair = Pair.load(pairAddress.toHex()) as Pair;
-      if (pair.token0 === token.id && pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
-        const token1 = Token.load(pair.token1) as Token;
-        return pair.token1Price.times(token1.derivedETH as BigDecimal);
-      }
+      const pair = Pair.load(pairAddress.toHexString());
+      if (!!pair || pair !== null) {
+        if ((pair as Pair).token0 === token.id && (pair as Pair).reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
+          const token1 = Token.load((pair as Pair).token1) as Token;
+          return (pair as Pair).token1Price.times(token1.derivedETH as BigDecimal);
+        }
 
-      if (pair.token1 === token.id && pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
-        const token0 = Token.load(pair.token0) as Token;
-        return pair.token0Price.times(token0.derivedETH as BigDecimal);
+        if ((pair as Pair).token1 === token.id && (pair as Pair).reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
+          const token0 = Token.load((pair as Pair).token0) as Token;
+          return (pair as Pair).token0Price.times(token0.derivedETH as BigDecimal);
+        }
       }
     }
   }
   return ZERO_BD;
 };
 
-export const getTrackedVolumeInUSD = (bundle: Bundle, tokenAmount0: BigDecimal, token0: Token, tokenAmount1: BigDecimal, token1: Token): BigDecimal => {
+export const getTrackedVolumeInUSD = (
+  bundle: Bundle,
+  tokenAmount0: BigDecimal,
+  token0: Token,
+  tokenAmount1: BigDecimal,
+  token1: Token
+): BigDecimal => {
   const price0 = token0.derivedETH!.times(bundle.ethPrice);
   const price1 = token1.derivedETH!.times(bundle.ethPrice);
 

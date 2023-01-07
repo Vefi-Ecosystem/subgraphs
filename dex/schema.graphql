@@ -28,13 +28,10 @@ type Pair @entity {
   txCount: BigInt!
   createdAtTimestamp: BigInt!
   createdAtBlockNumber: BigInt!
-  liquidityProviderCount: BigInt!
-  pairHourData: [PairHourData!]! @derivedFrom(field: "pair")
-  liquidityPositions: [LiquidityPosition!]! @derivedFrom(field: "pair")
-  liquidityPositionSnapshots: [LiquidityPositionSnapshot!]! @derivedFrom(field: "pair")
-  mints: [Mint!]! @derivedFrom(field: "pair")
-  burns: [Burn!]! @derivedFrom(field: "pair")
-  swaps: [Swap!]! @derivedFrom(field: "pair")
+  pairHourData: [PairHourData!] @derivedFrom(field: "pair")
+  mints: [Mint!] @derivedFrom(field: "pair")
+  burns: [Burn!] @derivedFrom(field: "pair")
+  swaps: [Swap!] @derivedFrom(field: "pair")
 }
 
 type Token @entity {
@@ -50,40 +47,11 @@ type Token @entity {
   totalLiquidity: BigDecimal!
   derivedETH: BigDecimal
   derivedUSD: BigDecimal
-  tokenDayData: [TokenDayData!]! @derivedFrom(field: "token")
-  pairDayDataBase: [PairDayData!]! @derivedFrom(field: "token0")
-  pairDayDataQuote: [PairDayData!]! @derivedFrom(field: "token1")
-  pairBase: [Pair!]! @derivedFrom(field: "token0")
-  pairQuote: [Pair!]! @derivedFrom(field: "token1")
-}
-
-type User @entity {
-  id: ID!
-  liquidityPositions: [LiquidityPosition!] @derivedFrom(field: "user")
-  usdSwapped: BigDecimal!
-}
-
-type LiquidityPosition @entity {
-  id: ID!
-  user: User!
-  pair: Pair!
-  liquidityTokenBalance: BigDecimal!
-}
-
-type LiquidityPositionSnapshot @entity {
-  id: ID!
-  liquidityPosition: LiquidityPosition!
-  timestamp: Int!
-  block: Int!
-  user: User!
-  pair: Pair!
-  token0PriceUSD: BigDecimal!
-  token1PriceUSD: BigDecimal!
-  reserve0: BigDecimal!
-  reserve1: BigDecimal!
-  reserveUSD: BigDecimal!
-  liquidityTokenTotalSupply: BigDecimal!
-  liquidityTokenBalance: BigDecimal!
+  tokenDayData: [TokenDayData!] @derivedFrom(field: "token")
+  pairDayDataBase: [PairDayData!] @derivedFrom(field: "token0")
+  pairDayDataQuote: [PairDayData!] @derivedFrom(field: "token1")
+  pairBase: [Pair!] @derivedFrom(field: "token0")
+  pairQuote: [Pair!] @derivedFrom(field: "token1")
 }
 
 type Transaction @entity {
