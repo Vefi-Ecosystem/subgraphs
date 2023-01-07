@@ -25,8 +25,8 @@ export const getETHPriceInUSD = (): BigDecimal => {
 
 const WHITELIST: Array<string> = [
   WETH,
-  "0xcf2df9377a4e3c10e9ea29fdb8879d74c27fcde7", // USDC
-  "0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d", // USDT
+  "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174", // USDC
+  "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", // USDT
 ];
 
 const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("10");
