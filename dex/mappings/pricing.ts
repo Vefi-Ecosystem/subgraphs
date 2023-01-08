@@ -11,7 +11,7 @@ export const getETHPriceInUSD = (): BigDecimal => {
     const totalLiquidityETH = usdtPair.reserve1.plus(usdcPair.reserve1);
     if (totalLiquidityETH.notEqual(ZERO_BD)) {
       const usdtWeight = usdtPair.reserve1.div(totalLiquidityETH);
-      const usdcWeight = usdtPair.reserve1.div(totalLiquidityETH);
+      const usdcWeight = usdcPair.reserve1.div(totalLiquidityETH);
       return usdtPair.token0Price.times(usdtWeight).plus(usdcPair.token0Price.times(usdcWeight));
     }
     return ZERO_BD;
