@@ -8,8 +8,8 @@ dataSources:
     network: mainnet
     source:
       abi: QuasarFactory
-      address: "0x0f3f2b6BE393A2536291F1e93471C7fEFf7Fed96"
-      startBlock: 256318718
+      address: "0x6A6CFF59de25175A5BC9e4796C88a73b2c581b49"
+      startBlock: 22521360
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

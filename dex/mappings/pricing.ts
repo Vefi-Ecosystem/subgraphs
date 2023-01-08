@@ -1,34 +1,39 @@
 import { Address, BigDecimal } from "@graphprotocol/graph-ts";
 import { Bundle, Pair, Token } from "../generated/schema";
-import { ADDRESS_ZERO, ONE_BD, WETH, WETH_USDC_PAIR, WETH_USDT_PAIR, ZERO_BD } from "./constants";
+import { ADDRESS_ZERO, ONE_BD, WETH, WETH_BUSD_PAIR, WETH_USDC_PAIR, WETH_USDT_PAIR, ZERO_BD } from "./constants";
 import { factoryContract } from "./utils";
 
 export const getETHPriceInUSD = (): BigDecimal => {
   const usdtPair = Pair.load(WETH_USDT_PAIR); // usdt is token1;
   const usdcPair = Pair.load(WETH_USDC_PAIR); // usdc is token1;
+  const busdPair = Pair.load(WETH_BUSD_PAIR); // busd is token1;
 
-  if (!!usdtPair && !!usdcPair) {
-    const totalLiquidityETH = usdtPair.reserve0.plus(usdcPair.reserve0);
+  if (!!usdtPair && !!usdcPair && !!busdPair) {
+    const totalLiquidityETH = usdtPair.reserve0.plus(usdcPair.reserve0).plus(busdPair.reserve0);
     if (totalLiquidityETH.notEqual(ZERO_BD)) {
       const usdtWeight = usdtPair.reserve0.div(totalLiquidityETH);
       const usdcWeight = usdtPair.reserve0.div(totalLiquidityETH);
-      return usdtPair.token1Price.times(usdtWeight).plus(usdcPair.token1Price.times(usdcWeight));
+      const busdWeight = busdPair.reserve0.div(totalLiquidityETH);
+      return usdtPair.token1Price.times(usdtWeight).plus(usdcPair.token1Price.times(usdcWeight)).plus(busdPair.token1Price.times(busdWeight));
     }
     return ZERO_BD;
   } else if (!!usdtPair) {
     return usdtPair.token1Price;
   } else if (!!usdcPair) {
     return usdcPair.token1Price;
+  } else if (!!busdPair) {
+    return busdPair.token1Price;
   }
   return ZERO_BD;
 };
 
 const WHITELIST: Array<string> = [
   WETH,
-  "0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b", // USDC
-  "0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73", // USDT
-  "0xf390830df829cf22c53c8840554b98eafc5dcbc2", // WBTC
-  "0xfa9343c3897324496a05fc75abed6bac29f8a40f" // ETH
+  "0xe9e7cea3dedca5984780bafc599bd69add087d56", // BUSD
+  "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d", // USDC
+  "0x55d398326f99059ff775485246999027b3197955", // USDT
+  "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c", // WBTC
+  "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // ETH
 ];
 
 const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("10");
