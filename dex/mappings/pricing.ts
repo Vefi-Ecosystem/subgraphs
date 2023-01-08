@@ -1,37 +1,32 @@
 import { Address, BigDecimal } from "@graphprotocol/graph-ts";
 import { Bundle, Pair, Token } from "../generated/schema";
-import { ADDRESS_ZERO, ONE_BD, WETH, WETH_BUSD_PAIR, WETH_USDC_PAIR, WETH_USDT_PAIR, ZERO_BD } from "./constants";
+import { ADDRESS_ZERO, ONE_BD, WETH, WETH_USDC_PAIR, WETH_USDT_PAIR, ZERO_BD } from "./constants";
 import { factoryContract } from "./utils";
 
 export const getETHPriceInUSD = (): BigDecimal => {
-  const usdtPair = Pair.load(WETH_USDT_PAIR); // usdt is token1;
-  const usdcPair = Pair.load(WETH_USDC_PAIR); // usdc is token1;
-  const busdPair = Pair.load(WETH_BUSD_PAIR); // busd is token1;
+  const usdtPair = Pair.load(WETH_USDT_PAIR); // usdt is token0;
+  const usdcPair = Pair.load(WETH_USDC_PAIR); // usdc is token0;
 
-  if (!!usdtPair && !!usdcPair && !!busdPair) {
-    const totalLiquidityETH = usdtPair.reserve0.plus(usdcPair.reserve0).plus(busdPair.reserve0);
+  if (!!usdtPair && !!usdcPair) {
+    const totalLiquidityETH = usdtPair.reserve1.plus(usdcPair.reserve0);
     if (totalLiquidityETH.notEqual(ZERO_BD)) {
-      const usdtWeight = usdtPair.reserve0.div(totalLiquidityETH);
-      const usdcWeight = usdtPair.reserve0.div(totalLiquidityETH);
-      const busdWeight = busdPair.reserve0.div(totalLiquidityETH);
-      return usdtPair.token1Price.times(usdtWeight).plus(usdcPair.token1Price.times(usdcWeight)).plus(busdPair.token1Price.times(busdWeight));
+      const usdtWeight = usdtPair.reserve1.div(totalLiquidityETH);
+      const usdcWeight = usdtPair.reserve1.div(totalLiquidityETH);
+      return usdtPair.token0Price.times(usdtWeight).plus(usdcPair.token0Price.times(usdcWeight));
     }
     return ZERO_BD;
   } else if (!!usdtPair) {
-    return usdtPair.token1Price;
+    return usdtPair.token0Price;
   } else if (!!usdcPair) {
-    return usdcPair.token1Price;
-  } else if (!!busdPair) {
-    return busdPair.token1Price;
+    return usdcPair.token0Price;
   }
   return ZERO_BD;
 };
 
 const WHITELIST: Array<string> = [
   WETH,
-  "0xe9e7cea3dedca5984780bafc599bd69add087d56", // BUSD
-  "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d", // USDC
-  "0x55d398326f99059ff775485246999027b3197955", // USDT
+  "0xc946daf81b08146b1c7a8da2a851ddf2b3eaaf85", // USDC
+  "0x382bb369d343125bfb2117af9c149795c6c65c50", // USDT
   "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c", // WBTC
   "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // ETH
 ];
