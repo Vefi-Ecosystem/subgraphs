@@ -1,34 +1,25 @@
 import { Address, BigDecimal } from "@graphprotocol/graph-ts";
 import { Bundle, Pair, Token } from "../generated/schema";
-import { ADDRESS_ZERO, ONE_BD, WETH, WETH_USDC_PAIR, WETH_USDT_PAIR, ZERO_BD } from "./constants";
+import { ADDRESS_ZERO, ONE_BD, WETH, WETH_USDT_PAIR, ZERO_BD } from "./constants";
 import { factoryContract } from "./utils";
 
 export const getETHPriceInUSD = (): BigDecimal => {
   const usdtPair = Pair.load(WETH_USDT_PAIR); // usdt is token0;
-  const usdcPair = Pair.load(WETH_USDC_PAIR); // usdc is token0;
 
-  if (!!usdtPair && !!usdcPair) {
-    const totalLiquidityETH = usdtPair.reserve1.plus(usdcPair.reserve0);
+  if (!!usdtPair) {
+    const totalLiquidityETH = usdtPair.reserve1;
     if (totalLiquidityETH.notEqual(ZERO_BD)) {
       const usdtWeight = usdtPair.reserve1.div(totalLiquidityETH);
-      const usdcWeight = usdtPair.reserve1.div(totalLiquidityETH);
-      return usdtPair.token0Price.times(usdtWeight).plus(usdcPair.token0Price.times(usdcWeight));
+      return usdtPair.token0Price.times(usdtWeight);
     }
     return ZERO_BD;
-  } else if (!!usdtPair) {
-    return usdtPair.token0Price;
-  } else if (!!usdcPair) {
-    return usdcPair.token0Price;
   }
   return ZERO_BD;
 };
 
 const WHITELIST: Array<string> = [
   WETH,
-  "0xc946daf81b08146b1c7a8da2a851ddf2b3eaaf85", // USDC
-  "0x382bb369d343125bfb2117af9c149795c6c65c50", // USDT
-  "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c", // WBTC
-  "0x2170ed0880ac9a755fd29b2688956bd959f933f8", // ETH
+  "0x4151ab5072198d0843cd2999590ef292f49d6c66", // USDT
 ];
 
 const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("10");
