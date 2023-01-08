@@ -11,7 +11,7 @@ export const getETHPriceInUSD = (): BigDecimal => {
     const totalLiquidityETH = usdtPair.reserve0.plus(usdcPair.reserve1);
     if (totalLiquidityETH.notEqual(ZERO_BD)) {
       const usdtWeight = usdtPair.reserve0.div(totalLiquidityETH);
-      const usdcWeight = usdtPair.reserve1.div(totalLiquidityETH);
+      const usdcWeight = usdcPair.reserve1.div(totalLiquidityETH);
       return usdtPair.token1Price.times(usdtWeight).plus(usdcPair.token0Price.times(usdcWeight));
     }
     return ZERO_BD;
@@ -32,7 +32,9 @@ const WHITELIST: Array<string> = [
 const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("10");
 
 export const findETHPerToken = (token: Token): BigDecimal => {
-  if (token.id === WETH) return ONE_BD;
+  if (token.id === WETH) {
+    return ONE_BD;
+  }
 
   for (let i = 0; i < WHITELIST.length; i++) {
     const pairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]));
