@@ -1,6 +1,6 @@
 specVersion: 0.0.5
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: PublicTokenSaleCreator
@@ -17,13 +17,13 @@ dataSources:
         - Launch
       abis:
         - name: PublicTokenSaleCreator
-          file: ./abis/PublicTokenSaleCreator.json
+          file: PublicTokenSaleCreator/abis/PublicTokenSaleCreator.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: PublicTokenSaleCreator/abis/ERC20.json
       eventHandlers:
         - event: TokenSaleItemCreated(address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
           handler: handleTokenSaleItemCreated
-      file: ./mappings/creator.ts
+      file: PublicTokenSaleCreator/PublicTokenSaleCreator.wasm
   - kind: ethereum
     name: PublicTokenSaleCreator01
     network: mainnet
@@ -39,10 +39,10 @@ dataSources:
         - Launch
       abis:
         - name: PublicTokenSaleCreator
-          file: ./abis/PublicTokenSaleCreator.json
+          file: PublicTokenSaleCreator01/abis/PublicTokenSaleCreator.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: PublicTokenSaleCreator01/abis/ERC20.json
       eventHandlers:
         - event: TokenSaleItemCreated(address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
           handler: handleTokenSaleItemCreated
-      file: ./mappings/creator.ts
+      file: PublicTokenSaleCreator/PublicTokenSaleCreator.wasm
