@@ -48,7 +48,7 @@ export function handleTokenSaleItemCreated(event: TokenSaleItemCreatedEvent): vo
   launch.tokensForSale = convertTokenToDecimal(event.params.tokensForSale, token.decimals);
   launch.softcap = convertTokenToDecimal(event.params.softcap, BigInt.fromI32(18));
   launch.hardcap = convertTokenToDecimal(event.params.hardcap, BigInt.fromI32(18));
-  launch.tokensPerEther = convertTokenToDecimal(event.params.tokensPerEther, BigInt.fromI32(18));
+  launch.tokensPerEther = convertTokenToDecimal(event.params.tokensPerEther, token.decimals);
   launch.minContributionEther = convertTokenToDecimal(event.params.minContributionEther, BigInt.fromI32(18));
   launch.maxContributionEther = convertTokenToDecimal(event.params.maxContributionEther, BigInt.fromI32(18));
   launch.saleStartTime = event.params.saleStartTime;
