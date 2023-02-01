@@ -3,9 +3,9 @@ import { FACTORY_ADDRESS, ONE_BI, ZERO_BI } from "../constants";
 import { QuasarFactory as FactoryContract } from "../../generated/templates/Pair/QuasarFactory";
 
 export function exponentToBigDecimal(decimals: BigInt): BigDecimal {
-  let bd = BigDecimal.fromString("1");
+  let bd = BigDecimal.fromString("1.0");
   for (let i = ZERO_BI; i.lt(decimals as BigInt); i = i.plus(ONE_BI)) {
-    bd = bd.times(BigDecimal.fromString("10"));
+    bd = bd.times(BigDecimal.fromString("10.0"));
   }
   return bd;
 }
