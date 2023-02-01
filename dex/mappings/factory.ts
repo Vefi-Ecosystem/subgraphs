@@ -1,4 +1,4 @@
-import { log } from "@graphprotocol/graph-ts";
+import { log, BigInt } from '@graphprotocol/graph-ts';
 import { PairCreated as PairCreatedEvent } from "../generated/QuasarFactory/QuasarFactory";
 import { QuasarFactory, Pair, Bundle, Token } from "../generated/schema";
 import { Pair as PairTemplate } from "../generated/templates";
@@ -56,7 +56,7 @@ export function handlePairCreated(event: PairCreatedEvent): void {
     token0.untrackedVolumeUSD = ZERO_BD;
     token0.totalLiquidity = ZERO_BD;
     token0.txCount = ZERO_BI;
-    token0.totalSupply = totalSupply;
+    token0.totalSupply = totalSupply.div(BigInt.fromI32(10).pow(token0.decimals.toI32() as u8));
     token0.save();
   }
 
@@ -72,7 +72,7 @@ export function handlePairCreated(event: PairCreatedEvent): void {
       return;
     }
 
-    let totalSupply = fetchTokenTotalSupply(event.params.token0);
+    let totalSupply = fetchTokenTotalSupply(event.params.token1);
     if (totalSupply === null) {
       log.debug("could not obtain total supply for token 0", []);
       return;
@@ -86,7 +86,7 @@ export function handlePairCreated(event: PairCreatedEvent): void {
     token1.untrackedVolumeUSD = ZERO_BD;
     token1.totalLiquidity = ZERO_BD;
     token1.txCount = ZERO_BI;
-    token1.totalSupply = totalSupply;
+    token1.totalSupply = totalSupply.div(BigInt.fromI32(10).pow(token1.decimals.toI32() as u8));
     token1.save();
   }
 
