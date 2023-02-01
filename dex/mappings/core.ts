@@ -7,7 +7,7 @@ import { findETHPerToken, getETHPriceInUSD, getTrackedLiquidityUSD, getTrackedVo
 import { updatePairDayData, updatePairHourData, updateQuasarDayData, updateTokenDayData } from "./day_updates";
 
 function isCompleteMint(mintId: string): boolean {
-  return !!(MintEvent.load(mintId) as MintEvent).sender;
+  return (MintEvent.load(mintId) as MintEvent).sender !== null;
 }
 
 export function handleTransfer(event: Transfer): void {
