@@ -7,7 +7,7 @@ export const getETHPriceInUSD = (): BigDecimal => {
   const usdtPair = Pair.load(WETH_USDT_PAIR); // usdt is token0;
   const usdcPair = Pair.load(WETH_USDC_PAIR); // usdc is token0;
 
-  if (!!usdtPair && !!usdcPair) {
+  if (usdtPair !== null && usdcPair !== null) {
     const totalLiquidityETH = usdtPair.reserve1.plus(usdcPair.reserve0);
     if (totalLiquidityETH.notEqual(ZERO_BD)) {
       const usdtWeight = usdtPair.reserve1.div(totalLiquidityETH);
@@ -15,9 +15,9 @@ export const getETHPriceInUSD = (): BigDecimal => {
       return usdtPair.token0Price.times(usdtWeight).plus(usdcPair.token0Price.times(usdcWeight));
     }
     return ZERO_BD;
-  } else if (!!usdtPair) {
+  } else if (usdtPair !== null) {
     return usdtPair.token0Price;
-  } else if (!!usdcPair) {
+  } else if (usdcPair !== null) {
     return usdcPair.token0Price;
   }
   return ZERO_BD;
@@ -34,19 +34,19 @@ const WHITELIST: Array<string> = [
 const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("10");
 
 export const findETHPerToken = (token: Token): BigDecimal => {
-  if (token.id === WETH) return ONE_BD;
+  if (token.id == WETH) return ONE_BD;
 
   for (let i = 0; i < WHITELIST.length; i++) {
     const pairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]));
-    if (pairAddress.toHex() !== ADDRESS_ZERO) {
+    if (pairAddress.toHex() != ADDRESS_ZERO) {
       const pair = Pair.load(pairAddress.toHexString());
-      if (!!pair || pair !== null) {
-        if ((pair as Pair).token0 === token.id && (pair as Pair).reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
+      if (pair !== null) {
+        if ((pair as Pair).token0 == token.id && (pair as Pair).reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
           const token1 = Token.load((pair as Pair).token1) as Token;
           return (pair as Pair).token1Price.times(token1.derivedETH as BigDecimal);
         }
 
-        if ((pair as Pair).token1 === token.id && (pair as Pair).reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
+        if ((pair as Pair).token1 == token.id && (pair as Pair).reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
           const token0 = Token.load((pair as Pair).token0) as Token;
           return (pair as Pair).token0Price.times(token0.derivedETH as BigDecimal);
         }
