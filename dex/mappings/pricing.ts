@@ -43,7 +43,7 @@ export const findETHPerToken = (token: Token): BigDecimal => {
 
   for (let i = 0; i < WHITELIST.length; i++) {
     const pairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]));
-    if (pairAddress.toHex() !== ADDRESS_ZERO) {
+    if (pairAddress.toHex() != ADDRESS_ZERO) {
       const pair = Pair.load(pairAddress.toHexString());
       if (pair !== null) {
         if ((pair as Pair).token0 == token.id && (pair as Pair).reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
