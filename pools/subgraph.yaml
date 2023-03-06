@@ -1,0 +1,35 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: StakingPoolActions
+    network: mainnet
+    source:
+      address: "0xDd57f799E169cF600c5695205c6392BD7B883758"
+      abi: StakingPoolActions
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - StakingPoolDeployed
+      abis:
+        - name: StakingPoolActions
+          file: ./abis/StakingPoolActions.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: StakingPoolDeployed(address,address,address,address,uint256,uint8,uint256)
+          handler: handleStakingPoolDeployed
+      file: ./src/staking-pool-actions.ts
