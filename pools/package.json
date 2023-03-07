@@ -4,7 +4,8 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ vefi/pools",
+    "deploy": "graph deploy --network mainnet --ipfs https://graph.vefinetwork.org/app/ipfs/ --node https://graph.vefinetwork.org/app/bitgert/admin/ vefi/pools",
+    "create-remote": "graph create --network mainnet --node https://graph.vefinetwork.org/app/bitgert/admin/ vefi/pools",
     "create-local": "graph create --node http://localhost:8020/ vefi/pools",
     "remove-local": "graph remove --node http://localhost:8020/ vefi/pools",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 vefi/pools",
@@ -12,7 +13,10 @@
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.37.1",
-    "@graphprotocol/graph-ts": "0.28.1"
+    "@graphprotocol/graph-ts": "0.28.1",
+    "source-map-support": "^0.5.21"
   },
-  "devDependencies": { "matchstick-as": "0.5.0" }
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  }
 }

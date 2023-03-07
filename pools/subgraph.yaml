@@ -7,29 +7,51 @@ dataSources:
     network: mainnet
     source:
       address: "0xDd57f799E169cF600c5695205c6392BD7B883758"
+      startBlock: 2220085
       abi: StakingPoolActions
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - OwnershipTransferred
-        - RoleAdminChanged
-        - RoleGranted
-        - RoleRevoked
-        - StakingPoolDeployed
+        - StakingPool
+        - StakingPoolFactory
+        - Token
       abis:
         - name: StakingPoolActions
           file: ./abis/StakingPoolActions.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       eventHandlers:
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-          handler: handleRoleAdminChanged
-        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleGranted
-        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleRevoked
         - event: StakingPoolDeployed(address,address,address,address,uint256,uint8,uint256)
           handler: handleStakingPoolDeployed
-      file: ./src/staking-pool-actions.ts
+      file: ./mappings/factory.ts
+templates:
+  - kind: ethereum
+    name: StakingPool
+    network: mainnet
+    source:
+      abi: StakingPool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - StakingPool
+        - Stake
+        - Withdrawal
+      abis:
+        - name: StakingPool
+          file: ./abis/Pool.json
+        - name: StakingPoolActions
+          file: ./abis/StakingPoolActions.json
+      eventHandlers:
+        - event: Stake(address,uint256,uint256)
+          handler: handleStake
+        - event: Unstake(address,uint256)
+          handler: handleUnstake
+        - event: Withdrawal(address,uint256)
+          handler: handleWithdrawal
+        - event: TaxPercentageChanged(uint8)
+          handler: handleTaxPercentageChanged
+      file: ./mappings/core.ts

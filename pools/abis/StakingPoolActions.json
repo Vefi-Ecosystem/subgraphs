@@ -1,8 +1,6 @@
 [
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_deploymentFee", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "_deploymentFee", "type": "uint256" }],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -172,9 +170,7 @@
       { "internalType": "int256", "name": "daysToLast", "type": "int256" }
     ],
     "name": "deployStakingPool",
-    "outputs": [
-      { "internalType": "address", "name": "poolId", "type": "address" }
-    ],
+    "outputs": [{ "internalType": "address", "name": "poolId", "type": "address" }],
     "stateMutability": "payable",
     "type": "function"
   },
@@ -186,9 +182,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "excludeFromFee",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -216,9 +210,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
-    ],
+    "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }],
     "name": "getRoleAdmin",
     "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
     "stateMutability": "view",
@@ -245,9 +237,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "includeInFee",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -261,18 +251,14 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "removeFeeSetter",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "removeFeeTaker",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -306,45 +292,35 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_fee", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "_fee", "type": "uint256" }],
     "name": "setFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "setFeeSetter",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "setFeeTaker",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }
-    ],
+    "inputs": [{ "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }],
     "name": "supportsInterface",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",

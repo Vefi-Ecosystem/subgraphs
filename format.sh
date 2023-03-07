@@ -1,0 +1,1 @@
+prettier --write **/**/*.{js,ts,json,yml,yaml}

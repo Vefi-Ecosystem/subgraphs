@@ -1,52 +1,47 @@
-type OwnershipTransferred @entity(immutable: true) {
-  id: Bytes!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type StakingPoolFactory @entity {
+  id: ID!
+  poolsCount: Int!
+  stakesCount: Int!
 }
 
-type RoleAdminChanged @entity(immutable: true) {
-  id: Bytes!
-  role: Bytes! # bytes32
-  previousAdminRole: Bytes! # bytes32
-  newAdminRole: Bytes! # bytes32
+type StakingPool @entity {
+  id: ID!
+  owner: Bytes!
+  stakedToken: Token!
+  rewardToken: Token!
+  apy: BigInt!
+  tax: Int!
+  endsIn: BigInt!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  totalStaked: BigDecimal!
+  totalRewards: BigDecimal!
+  stakes: [Stake!] @derivedFrom(field: "pool")
+  withdrawals: [Withdrawal!] @derivedFrom(field: "pool")
 }
 
-type RoleGranted @entity(immutable: true) {
-  id: Bytes!
-  role: Bytes! # bytes32
-  account: Bytes! # address
-  sender: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Token @entity {
+  id: ID!
+  name: String!
+  decimals: BigInt!
+  symbol: String!
+  totalSupply: BigInt!
 }
 
-type RoleRevoked @entity(immutable: true) {
-  id: Bytes!
-  role: Bytes! # bytes32
-  account: Bytes! # address
-  sender: Bytes! # address
-  blockNumber: BigInt!
+type Stake @entity {
+  id: ID!
+  account: Bytes!
+  amount: BigDecimal!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  blockNumber: BigInt!
+  pool: StakingPool!
 }
 
-type StakingPoolDeployed @entity(immutable: true) {
-  id: Bytes!
-  poolId: Bytes! # address
-  owner: Bytes! # address
-  token0: Bytes! # address
-  token1: Bytes! # address
-  apy: BigInt! # uint256
-  tax: Int! # uint8
-  endsIn: BigInt! # uint256
-  blockNumber: BigInt!
+type Withdrawal @entity {
+  id: ID!
+  account: Bytes!
+  reward: BigDecimal!
+  pool: StakingPool!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  blockNumber: BigInt!
 }
